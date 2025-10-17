@@ -46,7 +46,7 @@ Google's free tier is excellent for getting started.
 
 1.  Go to **[Google AI Studio](https://aistudio.google.com/)**.
 2.  Sign in with your Google account.
-3.  Click the **"Get API key"** button in the top left.
+3.  Click the **"Get API key"** button in the left sidebar.
 4.  Click **"Create API key in new project"**.
 5.  Copy the generated key and paste it into the extension's options page.
 
