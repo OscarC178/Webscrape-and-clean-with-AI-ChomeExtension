@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 // background.js
 
 let isJobRunning = false;
+=======
+// background.js (with final race condition fix)
+
+let isJobRunning = false; // Global flag to prevent multiple jobs
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
 
 // --- Helper Functions ---
 function delay(ms) {
@@ -22,8 +28,12 @@ Here is the text to clean:
 `;
 
 async function cleanTextWithAI(scrapedText, settings) {
+<<<<<<< HEAD
   // The 'settings' object now correctly contains aiProvider, apiKey, and aiModel
   const { aiProvider, apiKey, aiModel } = settings;
+=======
+  const { aiProvider, apiKey } = settings;
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
   if (!apiKey) {
     return "[AI CLEANING FAILED: API Key not set]\n\n" + scrapedText;
   }
@@ -34,17 +44,29 @@ async function cleanTextWithAI(scrapedText, settings) {
     case 'openai':
       endpoint = 'https://api.openai.com/v1/chat/completions';
       headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` };
+<<<<<<< HEAD
       body = JSON.stringify({ model: aiModel, messages: [{ role: "user", content: fullPrompt }]});
+=======
+      body = JSON.stringify({ model: "gpt-5-nano", messages: [{ role: "user", content: fullPrompt }]});
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
       break;
     case 'anthropic':
       endpoint = 'https://api.anthropic.com/v1/messages';
       headers = { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01' };
+<<<<<<< HEAD
       body = JSON.stringify({ model: aiModel, max_tokens: 4096, messages: [{ role: "user", content: fullPrompt }]});
       break;
     case 'google':
     default:
       // CORRECTED: The model name from settings is now used to build the endpoint
       endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${aiModel}:generateContent?key=${apiKey}`;
+=======
+      body = JSON.stringify({ model: "claude-3-5-haiku-20241022", max_tokens: 4096, messages: [{ role: "user", content: fullPrompt }]});
+      break;
+    case 'google':
+    default:
+      endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`;
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
       headers = { 'Content-Type': 'application/json' };
       body = JSON.stringify({ contents: [{ parts: [{ text: fullPrompt }] }]});
       break;
@@ -112,6 +134,10 @@ function scrapeAndProcessUrl(url) {
     });
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
 chrome.runtime.onMessage.addListener(async (request) => {
   if (request.command === 'startBulkScrape' || request.command === 'scrapeCurrentTab') {
     if (isJobRunning) {
@@ -133,6 +159,7 @@ chrome.runtime.onMessage.addListener(async (request) => {
         return;
     }
 
+<<<<<<< HEAD
     // CORRECTED: Added 'aiModel' to the settings retrieval
     const settings = await chrome.storage.sync.get({
         aiProvider: 'google',
@@ -140,6 +167,9 @@ chrome.runtime.onMessage.addListener(async (request) => {
         rateLimit: 60,
         aiModel: 'gemini-2.5-flash' // Default model
     });
+=======
+    const settings = await chrome.storage.sync.get({ aiProvider: 'google', apiKey: '', rateLimit: 10 });
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
     const useAI = request.useAI || false;
 
     console.log(`Starting concurrent scraping for ${urls.length} URLs...`);
@@ -147,6 +177,10 @@ chrome.runtime.onMessage.addListener(async (request) => {
     const results = await Promise.all(scrapingPromises);
     console.log("All scraping finished. Moving to processing and saving.");
 
+<<<<<<< HEAD
+=======
+    // --- Sequential Processing (Cleaning and Saving) ---
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
     for (const result of results) {
         if (result.error) {
             console.error(`Skipping result for ${result.url} due to scraping error: ${result.error}`);
@@ -155,8 +189,13 @@ chrome.runtime.onMessage.addListener(async (request) => {
 
         let finalContent = result.textContent;
         if (useAI) {
+<<<<<<< HEAD
             console.log(`Cleaning content from ${result.url} with model ${settings.aiModel}...`);
             finalContent = await cleanTextWithAI(result.textContent, settings); // Pass the full settings object
+=======
+            console.log(`Cleaning content from ${result.url}...`);
+            finalContent = await cleanTextWithAI(result.textContent, settings);
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
 
             if (urls.length > 1) {
                 const delayTime = (60 / settings.rateLimit) * 1000;
@@ -164,6 +203,11 @@ chrome.runtime.onMessage.addListener(async (request) => {
             }
         }
 
+<<<<<<< HEAD
+=======
+        // **THE FIX IS HERE:** Awaiting saveData ensures the service worker
+        // stays alive until the entire job is complete.
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
         await saveData({ ...result, textContent: finalContent });
     }
 
@@ -172,7 +216,12 @@ chrome.runtime.onMessage.addListener(async (request) => {
   }
 });
 
+<<<<<<< HEAD
 // --- Save Data Function ---
+=======
+
+// --- Save Data Function (MV3 Compatible & Robust) ---
+>>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
 async function saveData(data) {
   const scrapeDate = new Date();
   const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
