@@ -1,8 +1,5 @@
 const urlListEditor = document.getElementById('urlListEditor');
-<<<<<<< HEAD
 const optionsButton = document.getElementById('optionsButton');
-=======
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
 const startButton = document.getElementById('startButton');
 const scrapeCurrentButton = document.getElementById('scrapeCurrentButton');
 const getAllTabsButton = document.getElementById('getAllTabsButton');
@@ -92,7 +89,6 @@ function saveUrlsToSession() {
   // Use session storage which persists until the browser is closed.
   chrome.storage.session.set({ 'savedUrls': urls });
 }
-<<<<<<< HEAD
 // Just before the 'loadUrlsFromSession()' line
 optionsButton.addEventListener('click', () => {
   chrome.runtime.openOptionsPage();
@@ -100,11 +96,6 @@ optionsButton.addEventListener('click', () => {
 async function loadUrlsFromSession() {
   // Set access level for session storage
   
-=======
-
-async function loadUrlsFromSession() {
-  // Set access level for session storage
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
   await chrome.storage.session.setAccessLevel({ accessLevel: 'TRUSTED_AND_UNTRUSTED_CONTEXTS' });
   const data = await chrome.storage.session.get('savedUrls');
   if (data.savedUrls) {

@@ -3,7 +3,6 @@ const apiKeyInput = document.getElementById('apiKey');
 const rateLimitInput = document.getElementById('rateLimit');
 const saveButton = document.getElementById('saveButton');
 const statusDiv = document.getElementById('status');
-<<<<<<< HEAD
 const modelSelect = document.getElementById('aiModel');
 
 // Defines the models available for each provider
@@ -41,26 +40,17 @@ function updateModelOptions() {
     modelSelect.appendChild(option);
   });
 }
-=======
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
 
 // Save settings to chrome.storage.sync
 function saveOptions() {
   const provider = providerSelect.value;
   const apiKey = apiKeyInput.value;
   const rateLimit = parseInt(rateLimitInput.value, 10);
-<<<<<<< HEAD
   const model = modelSelect.value;
 
   if (!apiKey) {
     statusDiv.textContent = 'Error: API Key cannot be empty.';
     statusDiv.style.color = '#dc3545';
-=======
-
-  if (!apiKey) {
-    statusDiv.textContent = 'Error: API Key cannot be empty.';
-    statusDiv.style.color = '#dc3545'; // Red for error
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
     setTimeout(() => { statusDiv.textContent = ''; }, 3000);
     return;
   }
@@ -68,42 +58,26 @@ function saveOptions() {
   chrome.storage.sync.set({
     aiProvider: provider,
     apiKey: apiKey,
-<<<<<<< HEAD
     rateLimit: rateLimit || 60,
     aiModel: model
   }, () => {
     statusDiv.textContent = 'Settings saved successfully!';
     statusDiv.style.color = '#28a745';
-=======
-    rateLimit: rateLimit || 10 // Default to 10 if empty or invalid
-  }, () => {
-    statusDiv.textContent = 'Settings saved successfully!';
-    statusDiv.style.color = '#28a745'; // Green for success
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
     setTimeout(() => { statusDiv.textContent = ''; }, 3000);
   });
 }
 
 // Load saved settings when the page is opened
 function restoreOptions() {
-<<<<<<< HEAD
   chrome.storage.sync.get({
     aiProvider: 'google',
     apiKey: '',
     rateLimit: 60,
     aiModel: 'gemini-2.5-flash'
-=======
-  // Set default values
-  chrome.storage.sync.get({
-    aiProvider: 'google',
-    apiKey: '',
-    rateLimit: 10
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
   }, (items) => {
     providerSelect.value = items.aiProvider;
     apiKeyInput.value = items.apiKey;
     rateLimitInput.value = items.rateLimit;
-<<<<<<< HEAD
     
     updateModelOptions(); // Populate the models dropdown first
     
@@ -111,15 +85,9 @@ function restoreOptions() {
     if (items.aiModel && modelSelect.querySelector(`option[value="${items.aiModel}"]`)) {
       modelSelect.value = items.aiModel;
     }
-=======
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
   });
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
 saveButton.addEventListener('click', saveOptions);
-<<<<<<< HEAD
 providerSelect.addEventListener('change', updateModelOptions);
-=======
-
->>>>>>> 81046e51301c81cbed0289962c65ea202a4d3de9
