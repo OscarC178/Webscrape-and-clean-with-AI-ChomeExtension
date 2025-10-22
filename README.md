@@ -1,4 +1,4 @@
-# RAG Text Scraper - Chrome Extension
+# AI RAG Text Scraper - Chrome Extension
 
 RAG Text Scraper is a powerful Chrome extension designed to extract clean, article-focused text from web pages. It's built for developers and researchers who need high-quality text data for Retrieval-Augmented Generation (RAG) systems. The extension can operate on a single page or in bulk on a list of URLs, with an optional AI-powered cleaning step to ensure the output is pristine.
 
