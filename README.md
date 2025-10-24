@@ -1,6 +1,8 @@
-# RAG Text Scraper - Chrome Extension
+# AI RAG Text Scraper - Chrome Extension
 
 RAG Text Scraper is a powerful Chrome extension designed to extract clean, article-focused text from web pages. It's built for developers and researchers who need high-quality text data for Retrieval-Augmented Generation (RAG) systems. The extension can operate on a single page or in bulk on a list of URLs, with an optional AI-powered cleaning step to ensure the output is pristine.
+
+For Product Build Decisions you can find the [CIRCLE Framework here](https://github.com/OscarC178/Webscrape-and-clean-with-AI-ChomeExtension/blob/main/ProductBuildDecisions.md)
 
 ---
 
@@ -22,17 +24,32 @@ The extension operates in two main stages: **Extraction** and **Cleaning**.
 1.  **Extraction:** When you start a job, the extension opens each URL in a new, inactive tab. It then injects Mozilla's Readability.js library, which is expertly designed to find the core "readable" content of a page, stripping away everything else. This raw text is then sent to the next stage.
 2.  **AI Cleaning (Optional):** If the "Clean with AI" checkbox is ticked, the extracted text is sent to your chosen AI provider. The AI is given a specific prompt to act as a text-processing expert, focusing on fixing paragraphs, removing duplicate sentences, and deleting irrelevant text fragments without summarizing or changing the original meaning.
 
----
+--- 
 
+## How to Set It Up
+
+1. Download from GitHub: Download the extension files as a ZIP file from the GitHub repository and unzip them to a folder on your computer.
+
+2. Enable Developer Mode in Chrome:
+
+3. Open Chrome and navigate to chrome://extensions.
+
+4. In the top right corner, toggle on "Developer mode".
+
+5. Load the Extension:
+
+5. Click the "Load unpacked" button that appears on the top left.
+
+6. Select the folder where you unzipped the extension files. The RAG Text Scraper icon should now appear in your extensions list.
+
+---
 ## Configuration (Options Page)
 
 Before using the AI features, you must configure the settings. Right-click the extension icon and select **"Options"**.
 
-
-
-* **AI Provider:** Select the LLM provider you want to use for the cleaning process. The default is Google Gemini.
+* **AI Provider & Model:** Select the LLM provider you want to use for the cleaning process. The default is Google Gemini.
 * **API Key:** This is your secret key for your chosen AI provider. The extension needs this to make requests on your behalf. See the section below for instructions on how to get one.
-* **API Requests Per Minute (RPM):** This setting is crucial for preventing errors. It tells the extension how many AI cleaning requests it can make per minute to stay within your provider's limits.
+* **API Requests Per Minute (RPM):** This setting is crucial for preventing errors. It tells the extension how many AI cleaning requests it can make per minute to stay within your provider's limits. Depending on your model the actual rate limit may vary, so you should toggle with number to find the optimal downloading/ cleaning speed for your needs
 
 ---
 
@@ -85,7 +102,7 @@ For this extension, **lite models are the recommended and most practical choice*
 
 ### When to Consider a Powerful Model (e.g., Gemini 2.5 Pro)
 
-Powerful models offer the highest quality cleaning but should be seen as a specialized tool for specific needs rather than the default.
+Powerful models offer the highest quality cleaning on very large website files (think 50k+ words) but should be seen as a specialized tool for specific needs rather than the default.
 
 * **Niche Use Cases:** You might consider a powerful model if you are preparing a small, highly curated dataset for a mission-critical application where even the slightest formatting error could be a problem.
 * **The Downside:** For bulk processing, they are significantly **slower and more expensive**, making them impractical for large-scale data collection. For most RAG workflows, this is simply overkill.
