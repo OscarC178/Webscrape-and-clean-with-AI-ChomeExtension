@@ -4,22 +4,33 @@
   <meta charset="UTF-8">
   <title>RAG Scraper Options</title>
   <style>
+    :root {
+      --bg-main: #fefdf5; /* Soft yellow background */
+      --text-main: #3d524f; /* Dark muted green */
+      --accent-green: #5a7d7c; /* Muted green for buttons */
+      --accent-green-hover: #4b6867;
+      --border-color: #e0e0d1;
+      --focus-ring: #f1c40f; /* Brighter yellow for focus */
+      --link-color: #007bff;
+    }
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       padding: 20px;
       width: 500px;
       margin: auto;
       background-color: #f4f4f9;
+      color: var(--text-main);
     }
     h1 {
       text-align: center;
-      color: #333;
+      color: var(--text-main);
+      font-weight: 600;
     }
     .container {
-      background: white;
-      padding: 20px;
+      background: var(--bg-main);
+      padding: 25px;
       border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
     .form-group {
       margin-bottom: 20px;
@@ -27,33 +38,52 @@
     label {
       display: block;
       margin-bottom: 8px;
-      font-weight: bold;
-      color: #555;
+      font-weight: 500;
+      color: var(--text-main);
     }
-    select, input[type="text"], input[type="password"], input[type="number"] {
+    select, input[type="password"], input[type="number"] {
       width: 100%;
       padding: 10px;
-      border-radius: 4px;
-      border: 1px solid #ddd;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
       box-sizing: border-box;
+      background-color: #fff;
+      color: var(--text-main);
+    }
+    select:focus, input:focus {
+        outline: 2px solid var(--focus-ring);
+        border-color: transparent;
+    }
+    .api-key-container small {
+        display: block;
+        margin-top: 6px;
+        font-size: 12px;
+    }
+    .api-key-link {
+        color: var(--link-color);
+        text-decoration: none;
+    }
+    .api-key-link:hover {
+        text-decoration: underline;
     }
     button {
       width: 100%;
       padding: 12px;
       font-size: 16px;
       border: none;
-      background-color: #007bff;
+      background-color: var(--accent-green);
       color: white;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s ease;
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: var(--accent-green-hover);
     }
     #status {
       text-align: center;
       margin-top: 15px;
-      color: #28a745;
       font-weight: bold;
       min-height: 20px;
     }
@@ -74,18 +104,22 @@
 
     <div class="form-group">
       <label for="aiModel">Select AI Model:</label>
-      <select id="aiModel">
-        </select>
+      <select id="aiModel"></select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group api-key-container">
       <label for="apiKey">API Key:</label>
       <input type="password" id="apiKey" placeholder="Enter your API key here">
+      <small>
+        <a id="googleKeyLink" href="https://aistudio.google.com/" target="_blank" class="api-key-link">Click here to get a Google AI Studio API key.</a>
+        <a id="openaiKeyLink" href="https://platform.openai.com/api-keys" target="_blank" class="api-key-link" style="display: none;">Click here to get an OpenAI API key.</a>
+        <a id="anthropicKeyLink" href="https://console.anthropic.com/dashboard" target="_blank" class="api-key-link" style="display: none;">Click here to get an Anthropic API key.</a>
+      </small>
     </div>
 
     <div class="form-group">
       <label for="rateLimit">API Requests Per Minute (RPM):</label>
-      <input type="number" id="rateLimit" placeholder="e.g., 60" min="1">
+      <input type="number" id="rateLimit" placeholder="e.g., 15 for Gemini Flash Free Tier" min="1">
     </div>
 
     <button id="saveButton">Save Settings</button>
